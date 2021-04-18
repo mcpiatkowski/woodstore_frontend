@@ -8,15 +8,15 @@ import { listProductDetails, listProducts } from '../actions/productActions'
 
 function ProductScreen({ match }) {
 
-    const dispatch = useDispatch()
-    const productDetails = useSelector( state => state.productDetails )
-    const { loading, error, product } = productDetails
-
-
+    const dispatch = useDispatch();
+    const productDetails = useSelector(state => state.productDetails);
+    console.log(productDetails)
+    const { loading, error, product } = productDetails;
     useEffect(() => {
         dispatch(listProductDetails(match.params.id))
     }, [])
 
+   // const product = {}
     return (
         <div>
             <Link to="/" className="btn btn-light my-3">Go back</Link>
