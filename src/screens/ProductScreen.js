@@ -11,16 +11,17 @@ function ProductScreen({ match, history }) {
   const [qty, setQty] = useState(1);
 
   const dispatch = useDispatch();
+  // @ts-ignore
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
-  
+
   useEffect(() => {
     dispatch(listProductDetails(match.params.id));
   }, [dispatch, match]);
 
   const addToCartHandler = () => {
-    history.push(`/cart/${match.params.id}?qty=${qty}`)
-  }
+    history.push(`/cart/${match.params.id}?qty=${qty}`);
+  };
   // const product = {}
   return (
     <div>
@@ -44,7 +45,11 @@ function ProductScreen({ match, history }) {
               </ListGroup.Item>
 
               <ListGroup.Item>
-                <Rating value={product.rating} text={`${product.numReviews} recenzji`} color={"#f8e825"} />
+                <Rating
+                  value={product.rating}
+                  text={`${product.numReviews} recenzji`}
+                  color={"#f8e825"}
+                />
               </ListGroup.Item>
 
               <ListGroup.Item>Cena: {product.price}</ListGroup.Item>
@@ -68,7 +73,9 @@ function ProductScreen({ match, history }) {
                 <ListGroup.Item>
                   <Row>
                     <Col>Status:</Col>
-                    <Col md='auto'>{product.countInStock > 0 ? "W magazynie" : "Brak"}</Col>
+                    <Col md='auto'>
+                      {product.countInStock > 0 ? "W magazynie" : "Brak"}
+                    </Col>
                   </Row>
                 </ListGroup.Item>
                 {product.countInStock > 0 && (
@@ -76,10 +83,12 @@ function ProductScreen({ match, history }) {
                     <Row>
                       <Col>Qty: </Col>
                       <Col xs='auto' className='my-1'>
-                        <Form.Control 
-                          as='select' 
-                          value={qty} 
-                          onChange={(e) => setQty(e.target.value)}>
+                        <Form.Control
+                          as='select'
+                          value={qty}
+                          // @ts-ignore
+                          onChange={(e) => setQty(e.target.value)}
+                        >
                           {[...Array(product.countInStock).keys()].map((x) => (
                             <option key={x + 1} value={x + 1}>
                               {x + 1}
