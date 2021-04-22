@@ -30,12 +30,13 @@ function RegisterScreen({ location, history }) {
   const submitHandler = (e) => {
     e.preventDefault();
 
-    if (password != confirmPassword) {
+    if (password !== confirmPassword) {
       setMessage("Hasła nie są zgodne.");
     } else {
       dispatch(register(name, email, password));
     }
   };
+
   return (
     <FormContainer>
       <h1>Logowanie</h1>
