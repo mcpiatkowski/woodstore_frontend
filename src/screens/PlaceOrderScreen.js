@@ -5,12 +5,15 @@ import { useDispatch, useSelector } from "react-redux";
 import CheckoutSteps from "../components/CheckoutSteps";
 import Message from "../components/Message";
 import { createOrder } from "../actions/orderActions";
+import { ORDER_CREATE_RESET } from "../constants/orderConstants";
 
 function PlaceOrderScreen({ history }) {
+  // @ts-ignore
   const orderCreate = useSelector((state) => state.orderCreate);
   const { order, error, success } = orderCreate;
 
   const dispatch = useDispatch();
+  // @ts-ignore
   const cart = useSelector((state) => state.cart);
 
   cart.itemsPrice = cart.cartItems
@@ -27,13 +30,14 @@ function PlaceOrderScreen({ history }) {
   useEffect(() => {
     if (success) {
       history.push(`/order/${order._id}`);
+      dispatch({ type: ORDER_CREATE_RESET });
     }
   }, [success, history]);
 
   const placeOrder = () => {
     dispatch(
       createOrder({
-        oderItems: cart.cartItems,
+        orderItems: cart.cartItems,
         shippingAddress: cart.shippingAddress,
         paymentMethod: cart.paymentMethod,
         itemsPrice: cart.itemsPrice,
