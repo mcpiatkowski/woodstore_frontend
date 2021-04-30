@@ -8,15 +8,13 @@ import { listUsers, deleteUser } from "../actions/userActions";
 
 function UserListScreen({ history }) {
   const dispatch = useDispatch();
-  // @ts-ignore
+
   const userList = useSelector((state) => state.userList);
   const { loading, error, users } = userList;
 
-  // @ts-ignore
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  // @ts-ignore
   const userDelete = useSelector((state) => state.userDelete);
   const { success: successDelete } = userDelete;
 
@@ -26,20 +24,21 @@ function UserListScreen({ history }) {
     } else {
       history.push("/login");
     }
-  }, [dispatch, history, successDelete]);
+  }, [dispatch, history, successDelete, userInfo]);
 
   const deleteHandler = (id) => {
-    if (window.confirm("Czy na pewno usunąć użytkownika?")) {
+    if (window.confirm("Are you sure you want to delete this user?")) {
       dispatch(deleteUser(id));
     }
   };
+
   return (
     <div>
-      <h1>users</h1>
+      <h1>Users</h1>
       {loading ? (
         <Loader />
       ) : error ? (
-        <Message variant='danger'> {error} </Message>
+        <Message variant='danger'>{error}</Message>
       ) : (
         <Table striped bordered hover responsive className='table-sm'>
           <thead>
@@ -65,12 +64,14 @@ function UserListScreen({ history }) {
                     <i className='fas fa-check' style={{ color: "red" }}></i>
                   )}
                 </td>
+
                 <td>
-                  <LinkContainer to={`/admin/user/${user._id}`}>
+                  <LinkContainer to={`/admin/user/${user._id}/edit`}>
                     <Button variant='light' className='btn-sm'>
                       <i className='fas fa-edit'></i>
                     </Button>
                   </LinkContainer>
+
                   <Button
                     variant='danger'
                     className='btn-sm'
