@@ -17,9 +17,11 @@ function UserEditScreen({ match, history }) {
 
   const dispatch = useDispatch();
 
+  // @ts-ignore
   const userDetails = useSelector((state) => state.userDetails);
   const { error, loading, user } = userDetails;
 
+  // @ts-ignore
   const userUpdate = useSelector((state) => state.userUpdate);
   const {
     error: errorUpdate,
